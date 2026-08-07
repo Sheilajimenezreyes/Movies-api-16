@@ -105,3 +105,17 @@ app.patch("/peliculas/:idPelicula", (req, res) => {
 
 });
 
+app.put("/peliculas/:idPelicula", (req, res) => {
+    const idPelicula = req.params.idPelicula;
+    const index = peliculas.findIndex((peli) => peli.id === parseInt(idPelicula));
+
+    if(index === -1){
+        return res.status(400).send ("no se ha encontrado nada");
+    }
+
+    peliculas[index] = {
+        id: peliculas[index].id,
+        ...req.body
+    }
+    res.status(200).send(peliculas);
+})
