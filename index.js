@@ -1,11 +1,13 @@
 // REQUERIMOS EL PAQUETE EXPRESS PARA CREAR LA APP
 
 const express = require ("express");
+const moviesRouter = require('./routes/moviesRouter');
+require('dotenv').config()
+const connectToDataBase = require ("./db/db")
 
 //INICIALIZAMOS LA APP DE EXPRESS
 
 const app = express();
-const moviesRouter = require('./routes/moviesRouter');
 
 // let peliculas = [
 //    {id: 1, titulo: "Inception", director: "Christopher Nolan", año: 2010},
@@ -16,6 +18,8 @@ const moviesRouter = require('./routes/moviesRouter');
 //Midleware para manejar los datos que son JSON
 
 app.use (express.json())
+
+connectToDataBase(),
 
 // app.get("/hola", (req, res) => {
 //    res.send ("hello word");
