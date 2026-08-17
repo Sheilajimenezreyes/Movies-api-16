@@ -1,3 +1,4 @@
+const movieModel = require('../models/moviesModel');
 const MovieModel = require('../models/moviesModel');
 
 const getAllMovies = async (req, res) => {
@@ -9,26 +10,31 @@ const getAllMovies = async (req, res) => {
     }
 }
 
-const getById = (req, res) => {
-//    const idPelicula = req.params.idPelicula;
-//    const pelicula = moviesModel.find((peli) => peli.id === parseInt(idPelicula));
-//    if (!pelicula) {
-//        return res.status(400).send("no se ha encontrado nada")
-//    }
-//    res.send(pelicula);
+const getById = async (req, res) => {
+    try {
+        const idMovie = req.params.idMovie;
+        const movie = await movieModel.findById(idMovie);
+        if(!movie){
+            return res.status(404).send("Pelicula no encontrada")
+        }
+        res.status(200).send(movie);
+    } catch (error) {
+        res.status(500).send({status: 'Failed', error: error.message})
+    }
 }
 
-const deleteMovie = (req, res) => {
-//    const idPelicula = req.params.idPelicula;
-//    const index = moviesModel.findIndex((peli) => peli.id === parseInt(idPelicula));
-
-//    if (index === -1) {
-//        return res.status(400).send("No se ha encontrado la Peli");
-//    }
-//    moviesModel.splice(index, 1)
-
-//   res.status(200).send(moviesModel);
+const deleteMovie = async (req, res) => {
+try {
+    const idMovie = req.params.idMovie;
+    const movie = await movieModel.findByIdAndDelete(idMovie);
+    if(!movie){
+        return res.status(404).send("Pelicula no encontrada")
+    }
+        res.status(200).send("Se ha borrado correctamente");
+} catch (error) {
+    res.status(500).send({status: 'Failed', error: error.message})
 }
+};
 
 
 const addMovie = async (req, res) => {
@@ -42,4 +48,19 @@ const addMovie = async (req, res) => {
     }
 }
 
-module.exports = { getAllMovies, getById, deleteMovie, addMovie }
+
+const updateMovie = async (req, res) => {
+   try {
+    const idMovie = req.params.idMovie;
+    const newMovie = req.body;
+    const movie = await movieModel.findByIdAndUpdate(idMovie, newMovie, {new:true});
+    if(!movie){
+        return res.status(404).send("Pelicula no encontrada");
+    }
+    res.status(200).send(movie);
+   } catch (error) {
+    res.status(500).send({status:'Failed', error: error.message})
+   }
+}
+
+module.exports = { getAllMovies, getById, deleteMovie, addMovie, updateMovie }
