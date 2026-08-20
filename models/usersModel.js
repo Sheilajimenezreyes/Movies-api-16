@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
-const schema = mongoose.schema;
+const schema = mongoose.Schema;
 
 const userSchema = new schema({
     name:{
         type: String,
-        require: [true, "El nombre es obligatorio"]
+        required: [true, "El nombre es obligatorio"]
     },
     apellidos:{
         type: String,
-        require: [true, "El apellido es Obligatorio"]
+        required: [true, "El apellido es Obligatorio"]
     },
-    pasword:{
+    password:{
         type: String,
-        require:[true, "La contraseña es obligatoria"]
+        required:[true, "La contraseña es obligatoria"]
     },
     role:{
         type: String,
@@ -20,10 +20,10 @@ const userSchema = new schema({
         default: "user"
     },
     favoritos:{
-        type:[mongoose.schema.Types.ObjectId],
-        ref: "movie",
+        type:[mongoose.Schema.Types.ObjectId],
+        ref: "Movie",
     }
 });
 
-const userModel = mongoose.model('User', "userSchema", "user");
+const userModel = mongoose.model('User', userSchema, "user");
 module.exports = userModel;

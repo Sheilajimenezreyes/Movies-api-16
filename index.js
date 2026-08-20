@@ -2,8 +2,10 @@
 
 const express = require ("express");
 const moviesRouter = require('./routes/moviesRouter');
+const userRouter = require('./routes/userRouter');
 require('dotenv').config()
-const connectToDataBase = require ("./db/db")
+const connectToDataBase = require ("./db/db");
+const userModel = require("./models/usersModel");
 
 //INICIALIZAMOS LA APP DE EXPRESS
 
@@ -122,7 +124,7 @@ connectToDataBase(),
 //});
 
 app.use('/api', moviesRouter);
-
+app.use('/api', userRouter);
 
 //INICIAMOS EL SERVIDOR EN EL PUERTO 3000
 app.listen(3000, () => {
