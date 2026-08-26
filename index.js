@@ -3,6 +3,7 @@
 const express = require ("express");
 const moviesRouter = require('./routes/moviesRouter');
 const userRouter = require('./routes/userRouter');
+const loginRouter = require('./routes/loginRouter');
 require('dotenv').config()
 const connectToDataBase = require ("./db/db");
 const userModel = require("./models/usersModel");
@@ -125,6 +126,7 @@ connectToDataBase(),
 
 app.use('/api', moviesRouter);
 app.use('/api', userRouter);
+app.use('/api', loginRouter);
 
 //INICIAMOS EL SERVIDOR EN EL PUERTO 3000
 app.listen(3000, () => {

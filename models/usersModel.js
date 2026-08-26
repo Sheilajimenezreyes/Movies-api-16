@@ -10,6 +10,10 @@ const userSchema = new schema({
         type: String,
         required: [true, "El apellido es Obligatorio"]
     },
+    email:{
+        type: String,
+        required:[true, "El email es obligatorio"]
+    },
     password:{
         type: String,
         required:[true, "La contraseña es obligatoria"]
