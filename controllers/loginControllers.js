@@ -1,5 +1,6 @@
 const userModel = require('../models/usersModel');
 const bcrypt = require ('bcrypt');
+const jwt = require ("jsonwebtoken");
 
 const signup = async (req, res) => {
 try {
@@ -35,6 +36,14 @@ const login = async (req, res) =>{
             if(!validatePassword){
                 return res.status(404).send("Usuario o contraseña no validos");
             }
+
+            const payload = {
+                _id: user._id,
+                name: user.name,
+                user: user.role,
+            };
+            const secret = ''
+            const token = await jwt.sing(payload, secret, {expiresIn: "15min"})
         res.status(200).send(user);
     } catch (error) {
         res.status(500).send({status: 'Failed', error: error.message});
