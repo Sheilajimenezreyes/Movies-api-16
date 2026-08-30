@@ -1,6 +1,7 @@
 const userModel = require('../models/usersModel');
 const bcrypt = require ('bcrypt');
 const jwt = require ("jsonwebtoken");
+const {generateToken} = require ("../utils/utils");
 
 const signup = async (req, res) => {
 try {
@@ -42,13 +43,20 @@ const login = async (req, res) =>{
                 name: user.name,
                 user: user.role,
             };
-            const secret = ''
-            const token = await jwt.sing(payload, secret, {expiresIn: "15min"})
-        res.status(200).send(user);
+
+            //const token = await jwt.sign(payload, process.env.SECRET_TOKEN, 
+            //    {expiresIn: "15min"});
+
+            //const token_refresh = await jwt.sign(payload, process.env.SECRET_TOKEN_REFRESH, 
+            //    {expiresIn: "60min"});
+
+            const token = generateToken(payload, false);
+            const token_refresh = generateToken(payload, true)
+
+        res.status(200).send({user, token, token_refresh});
     } catch (error) {
         res.status(500).send({status: 'Failed', error: error.message});
     }
 };
-
 
 module.exports = { signup, login };
