@@ -12,7 +12,8 @@ const userSchema = new schema({
     },
     email:{
         type: String,
-        required:[true, "El email es obligatorio"]
+        required:[true, "El email es obligatorio"],
+        unique: true
     },
     password:{
         type: String,
