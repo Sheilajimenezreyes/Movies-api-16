@@ -12,7 +12,7 @@ try {
 
 const getUserById = async (req, res) =>{
     try {
-        const idUser = req.params.idUser;
+        const idUser = req.payload._id;
         const user = await userModel.findById(idUser);
         if(!user){
         return res.status(404).send("User no encontrado");

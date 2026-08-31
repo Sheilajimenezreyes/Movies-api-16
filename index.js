@@ -22,7 +22,7 @@ const app = express();
 
 app.use (express.json())
 
-connectToDataBase(),
+connectToDataBase();
 
 // app.get("/hola", (req, res) => {
 //    res.send ("hello word");
