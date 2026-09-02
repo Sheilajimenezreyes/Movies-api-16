@@ -18,8 +18,7 @@ const verifyAdmin = async (req, res, next) =>{
     if(!token) return res.status(401).send("Acceso denegado");
     
     try {
-        const payload = jwt.verify(token, process.env.SECRET_TOKEN);
-        req.payload = payload;
+        const payload = req.payload;
         if(!payload || payload.role === "user") return res.status(401).send("No tienes permisos");
         next();
     } catch (error) {
@@ -28,7 +27,7 @@ const verifyAdmin = async (req, res, next) =>{
 }
 
 
-
+//ESTO ES OTRA OPCION A LO ANTERIOR
 /*const verifyAdmin = async (req, res, next) =>{
      const token = req.header('auth-token');
     if(!token) return res.status(401).send("Acceso denegado");
