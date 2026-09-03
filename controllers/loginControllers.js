@@ -2,6 +2,7 @@ const userModel = require('../models/usersModel');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const { generateToken } = require("../utils/utils");
+const sendEmail = require('../services/emailServices');
 
 const signup = async (req, res) => {
     try {
@@ -15,6 +16,8 @@ const signup = async (req, res) => {
         }
 
         await userModel.create(newUser);
+        await sendEmail(email);
+        
         res.status(200).send('Usuario creado correctamente');
     } catch (error) {
         if (error.code === 11000) {
