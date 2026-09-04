@@ -49,4 +49,26 @@ const updateUser = async (req, res) =>{
     }
 };
 
-module.exports = {createUser, getUserById, deleteUser, updateUser};
+const addToFavourites = async (req, res) =>{
+    try {
+        const { idMovie } = req.params;
+        const idUser = req.payload._id;
+        if(!user){
+            res.status(200).send('Usuario no encontrado');
+        }
+        const user = await UserModel.findById(idUser);
+        const isIncluded = user.favoritas.includes(idMovie);
+        if(isIncluded){
+            res.status(200).send('Ya tengo esa peli');
+        }
+        user.favoritas.push(idMovie);
+        user.save()
+        return res.status(200).send(user);
+    } catch (error) {
+        res.status(500).send({status: 'Failed', error: error.message})
+    }
+};
+
+
+
+module.exports = {createUser, getUserById, deleteUser, updateUser, addToFavourites};
